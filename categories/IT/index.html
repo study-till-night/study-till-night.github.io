@@ -158,98 +158,41 @@
             
     
     
-        <article class="kratos-hentry kratos-entry-border-new clearfix">
-            <div class="kratos-status">
+        <article class="kratos-hentry clearfix">
+            <div class="kratos-entry-border-new clearfix">
                 
-                    <i class="fa fa-refresh"></i>
-                
-                <div class="kratos-status-inner">
-                    <div class="kratos-status-content">
+                <div class="kratos-entry-thumb-new">
+                    <a href="/2021/08/06/python%E7%88%AC%E8%99%AB%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B/">
                         
-                            <h2 id="爬虫简介"><a href="#爬虫简介" class="headerlink" title="-爬虫简介"></a><strong>-爬虫简介</strong></h2><p style="text-indent:4ex">python爬虫就是运用python语言中强大的第三方库模拟浏览器向网站发送请求，爬取目标网站HTML源码并进行解析从而得到希望的信息的一种手段。下面以爬取豆瓣TOP250电影信息作为爬虫初级的案例。<b>本文只以豆瓣案例为例对爬虫的基本流程做大致归纳，代码详细含义还请另外查找教程。</b>
-
-</p><h2 id="所需第三方库"><a href="#所需第三方库" class="headerlink" title="-所需第三方库"></a><strong>-所需第三方库</strong></h2><ul>
-<li>urllib        模拟浏览器发出请求并接收响应</li>
-<li>bs4          解析html代码</li>
-<li>re             正则表达式</li>
-<li>time         爬取间隙以休眠方式实现</li>
-<li>xlsxwriter     excel相关</li>
-<li>pymssql         数据库相关</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> response  <span class="comment"># urllib用于模拟浏览器发出请求并接收返回的响应</span></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup  <span class="comment"># bs4用于解析 html 代码</span></span><br><span class="line"><span class="keyword">import</span> re  <span class="comment"># re用于引用正则表达式来筛选信息</span></span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">import</span> urllib.error</span><br><span class="line"><span class="keyword">import</span> urllib.parse</span><br><span class="line"><span class="keyword">from</span> bs4.element <span class="keyword">import</span> Comment</span><br><span class="line"><span class="keyword">from</span> soupsieve <span class="keyword">import</span> select</span><br><span class="line"><span class="keyword">import</span> xlsxwriter  <span class="comment"># 生成.xlsx后缀excel文件并将数据写入</span></span><br><span class="line"><span class="keyword">import</span> pymssql</span><br><span class="line"><span class="keyword">import</span> pymysql  <span class="comment"># 数据库</span></span><br><span class="line"><span class="keyword">import</span> time  <span class="comment"># 调用该库中sleep()函数在每次访问间进行睡眠防止被拦截</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="主体函数"><a href="#主体函数" class="headerlink" title="-主体函数"></a><strong>-主体函数</strong></h2><ul>
-<li><h3 id="askinfo函数-获取网页源码"><a href="#askinfo函数-获取网页源码" class="headerlink" title="askinfo函数 获取网页源码"></a>askinfo函数 获取网页源码</h3></li>
-</ul>
-<p style="text-indent:4ex">在浏览器调试模式下（F12）network选项， 刷新页面后立即暂停记录，选取靠前位置的记录并打开headers信息获取浏览器user-agent ，保存以备后用。<b>缺失此步有大概率会导致爬虫被识别从而被禁止访问</b>。
-
-</p><p><img src="/2021/08/06/python%E7%88%AC%E8%99%AB%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B/1.png"></p>
-<p style="text-indent:4ex">使用urllib.request.Request发送信息，参数传递为网站url、之前获取的头部、请求方式。接收反馈， read并用utf解码（注意休眠），返回解码后的html源码。
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">askInfo</span>(<span class="params">url</span>):</span></span><br><span class="line"></span><br><span class="line">   headers = &#123;</span><br><span class="line">       <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">r&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36&#x27;</span>&#125;  <span class="comment"># 请求的头部信息</span></span><br><span class="line">   req = urllib.request.Request(  <span class="comment"># 发送请求</span></span><br><span class="line">       url=url, headers=headers, method=<span class="string">&#x27;POST&#x27;</span>)</span><br><span class="line"></span><br><span class="line">   html = <span class="string">&#x27;&#x27;</span>  <span class="comment"># 用于保存源码的变量</span></span><br><span class="line">   <span class="keyword">try</span>:</span><br><span class="line">       response = urllib.request.urlopen(req)  <span class="comment"># 接受反馈</span></span><br><span class="line">       html = response.read().decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">       time.sleep(<span class="number">5</span>)  <span class="comment"># 每次访问间隔休眠</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">except</span> urllib.error.URLError <span class="keyword">as</span> e:</span><br><span class="line">       <span class="keyword">if</span> <span class="built_in">hasattr</span>(e, <span class="string">&#x27;code&#x27;</span>):</span><br><span class="line">           <span class="built_in">print</span>(e.code)</span><br><span class="line">       <span class="keyword">if</span> <span class="built_in">hasattr</span>(e, <span class="string">&#x27;reason&#x27;</span>):</span><br><span class="line">           <span class="built_in">print</span>(e.reason)  <span class="comment"># 错误追踪</span></span><br><span class="line"></span><br><span class="line">   html.replace(<span class="string">u&#x27;\xa0&#x27;</span>, <span class="string">u&#x27; &#x27;</span>)  <span class="comment"># 替换gdk编码无法识别的字符</span></span><br><span class="line">   <span class="keyword">return</span> html</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
-<ul>
-<li><h3 id="getdata函数-对爬取的源码进行分析提炼"><a href="#getdata函数-对爬取的源码进行分析提炼" class="headerlink" title="getdata函数 对爬取的源码进行分析提炼"></a>getdata函数 对爬取的源码进行分析提炼</h3></li>
-</ul>
-</p><p style="text-indent:4ex">声明html分析器的bs变量，解析askinfo函数返回的html源码。利用bs库的查找函数找到目标信息对应的html标签大致位置。运用正则表达式分别搜索不同类型的信息。（正则表达式使用re库预先进行处理）
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#正则匹配规则</span></span><br><span class="line">rule_link = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;a href=&quot;(.*?)&quot;&gt;&#x27;</span>)  <span class="comment"># 链接匹配规则</span></span><br><span class="line">rule_img = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;img.*src=&quot;(.*?)&quot;.*&gt;&#x27;</span>, re.S)  <span class="comment"># 图片匹配规则</span></span><br><span class="line">rule_name = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;span class=&quot;title&quot;&gt;(.*)&lt;/span&gt;&#x27;</span>)  <span class="comment"># 名字匹配规则</span></span><br><span class="line">rule_grade = re.<span class="built_in">compile</span>(</span><br><span class="line">    <span class="string">r&#x27;&lt;span class=&quot;rating_num&quot; property=&quot;v:average&quot;&gt;(.*)&lt;/span&gt;&#x27;</span>)  <span class="comment"># 评分规则</span></span><br><span class="line">rule_comment = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;span&gt;(\d*)人评价&lt;/span&gt;&#x27;</span>)  <span class="comment"># 评价人数规则</span></span><br><span class="line">rule_Inq = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;span class=&quot;inq&quot;&gt;(.*)&lt;/span&gt;&#x27;</span>)  <span class="comment"># 概况规则</span></span><br><span class="line">rule_Info = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;p class=&quot;&quot;&gt;(.*?)&lt;/p&gt;&#x27;</span>, re.S)  <span class="comment"># 信息规则</span></span><br></pre></td></tr></table></figure>
-</p><p>将正则表达式返回的信息填入当前子列表,子列表入父列表,返回最终的父列表。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getData</span>(<span class="params">url</span>):</span></span><br><span class="line">    thedata = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">10</span>):</span><br><span class="line">        tem_url = url+<span class="built_in">str</span>(i*<span class="number">25</span>)  <span class="comment"># 对网址url进行拼接（每页25个电影）</span></span><br><span class="line">        html = askInfo(tem_url)  <span class="comment"># 得到网站源码</span></span><br><span class="line"></span><br><span class="line">        soup = BeautifulSoup(html, <span class="string">&quot;html.parser&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> soup.find_all(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;item&#x27;</span>):</span><br><span class="line">            data = []</span><br><span class="line">            item = <span class="built_in">str</span>(item)</span><br><span class="line"></span><br><span class="line">            link = re.findall(rule_link, item)[<span class="number">0</span>]  <span class="comment"># 定位链接</span></span><br><span class="line">            data.append(link)</span><br><span class="line"></span><br><span class="line">            img = re.findall(rule_img, item)[<span class="number">0</span>]  <span class="comment"># 定位图片链接</span></span><br><span class="line">            data.append(img)</span><br><span class="line"></span><br><span class="line">            cname = re.findall(rule_name, item)[<span class="number">0</span>]  <span class="comment"># 定位电影名</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">len</span>(re.findall(rule_name, item)) == <span class="number">2</span>):</span><br><span class="line"></span><br><span class="line">                ename = re.findall(rule_name, item)[</span><br><span class="line">                    <span class="number">1</span>].replace(<span class="string">&#x27;/&#x27;</span>, <span class="string">&#x27;&#x27;</span>)     <span class="comment"># 中英文名字处理</span></span><br><span class="line">                data.append(cname.strip())</span><br><span class="line">                data.append(ename.strip())</span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                data.append(cname)</span><br><span class="line">                data.append(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"></span><br><span class="line">            grade = re.findall(rule_grade, item)[<span class="number">0</span>]  <span class="comment"># 定位评分</span></span><br><span class="line">            data.append(grade)</span><br><span class="line"></span><br><span class="line">            Comment = re.findall(rule_comment, item)[<span class="number">0</span>]</span><br><span class="line">            data.append(Comment)</span><br><span class="line"></span><br><span class="line">            Inq = re.findall(rule_Inq, item)  <span class="comment"># 定位概况</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">len</span>(Inq) != <span class="number">0</span>):</span><br><span class="line">                data.append(Inq[<span class="number">0</span>].replace(<span class="string">&#x27;。&#x27;</span>, <span class="string">&#x27;&#x27;</span>))  <span class="comment"># 替换句号</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                data.append(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"></span><br><span class="line">            Info = re.findall(rule_Info, item)[<span class="number">0</span>]</span><br><span class="line">            Info = re.sub(<span class="string">&#x27;&lt;br(\s+)?/&gt;(\s+)?&#x27;</span>, <span class="string">&#x27; &#x27;</span>, Info)  <span class="comment"># 去除换行符</span></span><br><span class="line">            data.append(Info.strip())  <span class="comment"># 去除前后空格</span></span><br><span class="line"></span><br><span class="line">            thedata.append(data)  <span class="comment"># 将当前电影全部信息填入总列表</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> thedata</span><br></pre></td></tr></table></figure>
-<ul>
-<li><h3 id="savedata函数-存储数据（以存入excel为例）"><a href="#savedata函数-存储数据（以存入excel为例）" class="headerlink" title="savedata函数 存储数据（以存入excel为例）"></a>savedata函数 存储数据（以存入excel为例）</h3></li>
-</ul>
-<p style="text-indent:4ex">参数传入保存路径和getdata返回的列表，运用xlsxwriter库创建新文件的新工作表，将列表中子列表元素填入文件对应行列。最后关闭文件。成果如下。（部分）
-
-</p><p> <img src="/2021/08/06/python%E7%88%AC%E8%99%AB%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B/2.png"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">savedata</span>(<span class="params">savepath, datalist</span>):</span></span><br><span class="line">    workbook = xlsxwriter.Workbook(savepath)    <span class="comment">#创建excel文件</span></span><br><span class="line">    worksheet = workbook.add_worksheet(<span class="string">&#x27;sheet1&#x27;</span>)  <span class="comment"># 创建保存数据用excel</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(datalist)):</span><br><span class="line">        tem = datalist[i]</span><br><span class="line">        s = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> element <span class="keyword">in</span> tem:</span><br><span class="line">            worksheet.write(i + <span class="number">1</span>, s, element)</span><br><span class="line">            s = s+<span class="number">1</span></span><br><span class="line"></span><br><span class="line">    workbook.close()    <span class="comment">#关闭文件</span></span><br></pre></td></tr></table></figure>
-
-
-<ul>
-<li><h3 id="savedata函数（以存入数据库为例）"><a href="#savedata函数（以存入数据库为例）" class="headerlink" title="savedata函数（以存入数据库为例）"></a>savedata函数（以存入数据库为例）</h3></li>
-</ul>
-<p style="text-indent:4ex">参数传入为getdata返回的列表。本文讨论存入mysql 。存入sqlserver，sqlite等数据库方式类似。
-
-<ul>
-<li><h4 id="1-initdb函数-创建数据库"><a href="#1-initdb函数-创建数据库" class="headerlink" title="1.initdb函数 创建数据库"></a>1.initdb函数 创建数据库</h4></li>
-</ul>
-</p><p style="text-indent:4ex">连接数据库，填入对应host、 user、 password、 database、 charset，连接之前在cmd输入services.msc，找到mysql的服务并启用。获取游标,编写创建表单的sql语句（建议在workbench中新建查询复制过去执行验证是否正确）。执行sql语句, 提交结果。关闭游标，关闭连接。
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">InitData</span>():</span></span><br><span class="line">    sql = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    create table movie250</span></span><br><span class="line"><span class="string">    (</span></span><br><span class="line"><span class="string">	id int primary key not null auto_increment,</span></span><br><span class="line"><span class="string">	info_link text,</span></span><br><span class="line"><span class="string">	pic_link text,</span></span><br><span class="line"><span class="string">	cname varchar(20),</span></span><br><span class="line"><span class="string">	ename varchar(50),</span></span><br><span class="line"><span class="string">	score int,</span></span><br><span class="line"><span class="string">	rated real,</span></span><br><span class="line"><span class="string">	intro text,</span></span><br><span class="line"><span class="string">	info text</span></span><br><span class="line"><span class="string">    )</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    conn = pymysql.connect(host=<span class="string">&#x27;127.0.0.1&#x27;</span>, user=<span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">                           password=<span class="string">&#x27;654160&#x27;</span>, database=<span class="string">&quot;moiveDb&quot;</span>, charset=<span class="string">&#x27;utf8&#x27;</span>, port=<span class="number">3306</span>)</span><br><span class="line"></span><br><span class="line">    cursor = conn.cursor()</span><br><span class="line">    cursor.execute(sql)</span><br><span class="line">    conn.commit()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;建表成功&quot;</span>)</span><br><span class="line"></span><br><span class="line">    cursor.close()</span><br><span class="line">    conn.close()</span><br></pre></td></tr></table></figure>
-<ul>
-<li><h4 id="2-savedata函数-数据填入部分实现"><a href="#2-savedata函数-数据填入部分实现" class="headerlink" title="2.savedata函数 数据填入部分实现"></a>2.savedata函数 数据填入部分实现</h4></li>
-</ul>
-</p><p style="text-indent:4ex">对于获取到的列表中每一个子列表中的每一个子元素，进行首尾添加双引号处理，避免之后执行sql语句时产生二义。
-
-</p><p style="text-indent:4ex">连接数据库（同initdb函数）
-
-</p><p style="text-indent:4ex">编写sql插入语句，通过join函数对子列表每一个元素用逗号分割，将整个子列表用%s方式传入sql语句中，执行sql语句，上传结果。关闭游标，关闭连接。数据导入完成。
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">savedata</span>(<span class="params">datalist</span>):</span></span><br><span class="line"></span><br><span class="line">    InitData()</span><br><span class="line">    conn = pymysql.connect(host=<span class="string">&#x27;127.0.0.1&#x27;</span>, user=<span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">                           password=<span class="string">&#x27;654160&#x27;</span>, database=<span class="string">&quot;moiveDb&quot;</span>, charset=<span class="string">&#x27;utf8&#x27;</span>, port=<span class="number">3306</span>)  <span class="comment"># 数据库连接</span></span><br><span class="line">    cursor = conn.cursor()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;插入成功&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> datalist:</span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(data)):</span><br><span class="line">            data[index].replace(<span class="string">u&#x27;\xa0&#x27;</span>, <span class="string">u&#x27; &#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> index == <span class="number">4</span> <span class="keyword">or</span> index == <span class="number">5</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            data[index] = <span class="string">&#x27;&quot;&#x27;</span>+data[index]+<span class="string">&#x27;&quot;&#x27;</span>  <span class="comment"># 首尾添加双引号防止冲突</span></span><br><span class="line"></span><br><span class="line">        sql = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">            insert into movie250</span></span><br><span class="line"><span class="string">            (</span></span><br><span class="line"><span class="string">                info_link,pic_link,cname,ename,score,rated,intro,info</span></span><br><span class="line"><span class="string">            )</span></span><br><span class="line"><span class="string">            values(%s)&#x27;&#x27;&#x27;</span> % <span class="string">&quot;,&quot;</span>.join(data)  <span class="comment"># join连接字符串</span></span><br><span class="line"></span><br><span class="line">        cursor.execute(sql)</span><br><span class="line">        conn.commit()</span><br><span class="line"></span><br><span class="line">    cursor.close()</span><br><span class="line">    conn.close()</span><br></pre></td></tr></table></figure>
-
-</p><p><img src="/2021/08/06/python%E7%88%AC%E8%99%AB%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B/3.png"><br>使用python爬虫爬取豆瓣top250电影信息工作完成</p>
-<h2 id="ps："><a href="#ps：" class="headerlink" title="-ps："></a><strong>-ps：</strong></h2><p style="text-indent:4ex">数据可视化内容可自行了解
-若只为获取信息上述知识足以应付。若希望做出以采集信息并呈现为主打功能的网站项目，数据可视化的知识需要掌握。
-
-</p><p style="text-indent:4ex">一种可选的组合：
-python入门级web应用开发框架flask
-图表框架 Echarts词云WordCloud 用于词汇出现频率处理及对应展示。
-
-</p><p style="text-indent:4ex">此组合为数据可视化的一类选择搭配
-并非固定。有兴趣者可深入了解相关框架及应用。
-
-</p>
+                            <img class="kratos-entry-thumb-new-img" src="/2021/08/06/python%E7%88%AC%E8%99%AB%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B/cover.jpeg">
                         
+                    </a>
+                </div>
+                <div class="kratos-post-inner-new">
+                    <header class="kratos-entry-header-new">
+                            <a class="label-link" href="/categories/IT/">IT</a>
+                        <h2 class="kratos-entry-title-new"><a href="/2021/08/06/python%E7%88%AC%E8%99%AB%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B/">python爬虫初级教程</a>
+                    </header>
+                    <div class="kratos-entry-content-new">
+                        <p>
+                            
+                                -爬虫简介python爬虫就是运用python语言中强大的第三方库模拟浏览器向网站发送请求，爬取目标网站HTML源码并进行解析从而得到希望的信息的一种手段。下面以爬取豆瓣TOP250电影信息作为爬虫初级的案例。本文只以豆瓣案例为例对爬...
+                            
+                        </p>
                     </div>
                 </div>
-            </div>
-            
                 <footer class="kratos-post-meta-new">
                     <span class="pull-left">
-                        <a><i class="fa fa-calendar"></i></a><a>2021-08-06</a>
-                        
-                            <a><i class="fa fa-tags"></i></a>
-                            <a class="tag-none-link" href="/tags/IT/" rel="tag">IT</a>
-                        
+                        <a>
+                            <i class="fa fa-calendar"></i>
+                            2021-08-06
+                        </a>
+                        <a>
+                            
+                                <i class="fa fa-tags"></i>
+                                <a class="tag-none-link" href="/tags/IT/" rel="tag">IT</a>
+                            
+                        </a>
                         
                             <!-- 当前仅支持valine/waline自带的统计功能 -->
                             
@@ -259,15 +202,11 @@ python入门级web应用开发框架flask
                             
                         
                     </span>
-                    
-                    
-                        <span class="pull-right">
-                            <a class="read-more" href="/2021/08/06/python%E7%88%AC%E8%99%AB%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B/" title="留言">留言<i class="fa fa-chevron-circle-right"></i></a>
-                        </span>
-                    
-
+                    <span class="pull-right">
+                        <a class="read-more" href="/2021/08/06/python%E7%88%AC%E8%99%AB%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
+                    </span>
                 </footer>
-            
+            </div>
         </article>
     
 
@@ -334,6 +273,9 @@ python入门级web应用开发框架flask
         
         
           
+          
+            <a class="list-group-item" href="/2021/08/06/python%E7%88%AC%E8%99%AB%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B/"><i class="fa  fa-book"></i> python爬虫初级教程</a>
+            
           
         
           
