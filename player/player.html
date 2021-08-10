@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC PLAYER</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="shortcut icon" href="https://y.qq.com/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="fonticon/iconfont.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+            background: url("bgc.jpeg") no-repeat center;
+            background-size: cover;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: rgb(33, 164, 216);
+
+        }
+
+        .main {
+            position: relative;
+            margin: 50px auto;
+            width: 812px;
+            height: 600px;
+            /* background-color: pink; */
+        }
+
+        #header {
+            height: 60px;
+            background-color: #1696ca;
+            border: 1px solid rgb(112, 109, 109);
+            border-radius: 17px;
+        }
+
+        #header h3 {
+            float: left;
+            margin-left: 20px;
+            font-family: "Brad", Trebuchet、Georgia、Times New Roman、Arial、Lucida;
+            height: 100%;
+            width: 150px;
+            line-height: 60px;
+            color: white;
+        }
+
+        .input {
+            float: right;
+            margin-right: 20px;
+            width: 201px;
+            height: 100%;
+
+        }
+
+        .input input {
+            margin-top: 15px;
+            width: 85%;
+            height: 30px;
+            border-radius: 12px;
+            border: 1px solid rgb(112, 109, 109);
+            text-indent: 2ex;
+            outline: none;
+        }
+
+        .input a {
+            float: right;
+            width: 10%;
+        }
+
+        .input a:hover {
+            color: rgb(131, 127, 127);
+        }
+
+        .song {
+            display: flex;
+            margin-top: 15px;
+            width: 100%;
+            height: 416px;
+            justify-content: space-between;
+            border: 1px solid rgb(112, 109, 109);
+            border-radius: 17px;
+        }
+
+        .songlist {
+            width: 50%;
+            overflow: hidden;
+            /* background-color: purple; */
+        }
+
+        .songlist ul {
+            margin-top: 20px;
+            width: 100%;
+            /* height: 100%; */
+
+        }
+
+        .songlist ul li {
+            margin-left: 20px;
+            margin-bottom: 10px;
+            width: 226px;
+            height: 30px;
+
+        }
+
+        .songlist ul li a {
+            float: left;
+            height: 100%;
+            width: 100%;
+            font-size: 14px;
+            line-height: 30px;
+            text-indent: 4ex;
+            border-radius: 12px;
+            background-color: #fff;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .songlist ul li a:hover {
+            background-color: rgb(219, 218, 218);
+        }
+
+        .right {
+            width: 70%;
+            overflow: hidden;
+            /* background-color: brown; */
+        }
+
+        .cover {
+            margin-top: 15px;
+            width: 100%;
+            height: 150px;
+            /* background-color: pink; */
+        }
+
+        .cover div {
+            margin: 0 auto;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            /* border: 2px solid rgb(82, 79, 79); */
+            overflow: hidden;
+        }
+
+        .cover div img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .comment {
+            width: 100%;
+            height: 266px;
+            /* background: black; */
+        }
+
+        .comment ul {
+            width: 100%;
+            height: 100%;
+        }
+
+        .comment ul li {
+            margin: 5px 10px;
+            width: 100%;
+            height: 100px;
+            /* background-color: #fff; */
+        }
+
+        .above {
+            height: 50%;
+            font: 12px;
+            line-height: 50px;
+            /* text-indent: 2ex; */
+        }
+
+        .above div {
+            float: left;
+            width: 50px;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .above div img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            /* vertical-align: middle; */
+        }
+
+        .above span {
+            float: left;
+            height: 100%;
+            width: 400px;
+            line-height: 50px;
+            font-size: 16px;
+            font-weight: 1000;
+            text-indent: 2ex;
+            color: rgb(102, 99, 102);
+            /* background-color: purple; */
+        }
+
+        .below {
+            width: 100%;
+            height: 50%;
+            font-size: 16px;
+            text-indent: 2ex;
+            line-height: 60px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        audio {
+            position: absolute;
+            bottom: 45px;
+            width: 100%;
+            height: 40px;
+        }
+
+        .font_color {
+            color: rgb(13, 173, 236);
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <header id='header'>
+            <h3>MC Player</h3>
+            <div class="input">
+                <input type="text" name="" id="" placeholder="请输入关键词" v-model="query" @keyup.13="search">
+                <a class="iconfont icon-ai219 " @click="search"></a>
+            </div>
+        </header>
+        <!-- 歌曲列表 -->
+        <div class="song">
+            <div class="songlist">
+                <div style="height: 420px;width: 576px;overflow-y:scroll">
+                    <ul>
+                        <li v-for="(song,index) in res">
+                            <a :class="{font_color:index==isactive}" :title="song.name" href="javascript:; "
+                                @click="play(song.id,index)">{{ song.name }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 右侧音乐封面及评论 -->
+            <div class="right">
+                <div class="cover">
+                    <div><img :src="coversrc" alt=""></div>
+                </div>
+                <div class="comment">
+                    <div style="height: 268px;width: 493px;overflow-y:scroll">
+                        <ul>
+                            <li v-for="item in comments">
+                                <div class="above">
+                                    <div><img v-if="item.user.avatarUrl!=''" :src="item.user.avatarUrl" alt="">
+                                    </div>
+                                    <span>{{ item.user.nickname }}</span>
+                                </div>
+                                <div :title="item.content" class="below">
+                                    {{ item.content }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <audio :src="mscurl" autoplay controls @play="playing" @pause="pause"></audio>
+    </div>
+</body>
+<script>
+    let flag = 0;
+
+    let app = new Vue({
+        el: ".main",
+        data: {
+            res: [],
+            query: "",
+            mscurl: "",
+            coversrc: "",
+            ifplay: false,
+            comments: [],
+            isactive: -1
+        },
+        methods: {
+            search: function () {
+                let that = this;
+                if (this.query == "")
+                    return false;
+
+                axios.get("https://autumnfish.cn/search?keywords=" + this.query).then((result) => {
+                    that.res = result.data.result.songs;
+
+                    $(function () {
+                        // 延长动画
+                        $(".songlist ul li a").hover(function () {
+                            $(this).stop().animate({ width: 311 }, 200);
+                        }, function () {
+                            $(this).stop().animate({ width: 226 }, 200);
+                        })
+                    })
+
+                }).catch((err) => {
+                    alert(err);
+                });
+            },
+            play: function (mscid, index) {
+                let that = this;
+                that.isactive = index;
+                // 请求歌曲资源       
+                axios.get("https://autumnfish.cn/song/url?id=" + mscid).then((result) => {
+                    that.mscurl = result.data.data[0].url;
+
+                }).catch((err) => {
+                    alert(err);
+                });
+                // 请求歌曲封面
+                axios.get("https://autumnfish.cn/song/detail?ids=" + mscid).then((result) => {
+                    that.coversrc = result.data.songs[0].al.picUrl;
+                    // console.log(that.coversrc);
+                }).catch((err) => {
+                    alert(err);
+                });
+                // 请求歌曲热评
+                axios.get("https:autumnfish.cn/comment/hot?type=0&id=" + mscid).then((result) => {
+                    that.comments = result.data.hotComments;
+                    if (that.comments.length == 0)
+                        that.comments[0] = {
+                            content: "该歌曲没有评论",
+                            user: {
+                                avatarUrl: "",
+                                nickname: ""
+                            }
+                        }
+                }).catch((err) => {
+                    alert(err);
+                });
+            },
+            playing: function () {
+                flag = 1;
+            },
+            pause: function () {
+                flag = 0;
+            }
+
+        }
+
+    })
+    // 封面旋转动画
+    $(function () {
+        let deg = 360;
+        $(".cover img").css("transition", "all 2s");
+        if (!document.hidden) {
+            timer = setInterval(() => {
+                if (flag) {
+                    $(".cover img").css("transform", "rotate(" + deg + "deg)");
+                    deg += 360;
+                }
+            }, 1500)
+        }
+        else
+            clearInterval(timer);
+
+
+    })
+</script>
+
+</html>
