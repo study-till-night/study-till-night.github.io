@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -309,6 +308,7 @@
         methods: {
             search: function () {
                 let that = this;
+                that.isactive = -1;
                 if (this.query == "")
                     return false;
 
@@ -346,7 +346,7 @@
                     alert(err);
                 });
                 // 请求歌曲热评
-                axios.get("https:autumnfish.cn/comment/hot?type=0&id=" + mscid).then((result) => {
+                axios.get("https://autumnfish.cn/comment/hot?type=0&id=" + mscid).then((result) => {
                     that.comments = result.data.hotComments;
                     if (that.comments.length == 0)
                         that.comments[0] = {
@@ -384,8 +384,6 @@
         }
         else
             clearInterval(timer);
-
-
     })
 </script>
 
