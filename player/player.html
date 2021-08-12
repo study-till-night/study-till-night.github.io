@@ -51,6 +51,7 @@
             background-color: #1696ca;
             border: 1px solid rgb(112, 109, 109);
             border-radius: 17px;
+            box-shadow: 15px 11px 13px 0px gray;
         }
 
         #header h3 {
@@ -66,7 +67,7 @@
         .input {
             float: right;
             margin-right: 20px;
-            width: 201px;
+            width: 227px;
             height: 100%;
 
         }
@@ -127,12 +128,13 @@
             width: 100%;
             font-size: 14px;
             line-height: 30px;
-            text-indent: 4ex;
+            text-indent: 2ex;
             border-radius: 12px;
             background-color: #fff;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            box-shadow: 7px 9px 11px 0px grey;
         }
 
         .songlist ul li a:hover {
@@ -234,6 +236,8 @@
             bottom: 45px;
             width: 100%;
             height: 40px;
+            border-radius: 23px;
+            box-shadow: 11px 11px 13px 4px rgb(112 110 110);
         }
 
         .font_color {
@@ -258,8 +262,9 @@
                 <div style="height: 420px;width: 576px;overflow-y:scroll">
                     <ul>
                         <li v-for="(song,index) in res">
-                            <a :class="{font_color:index==isactive}" :title="song.name" href="javascript:; "
-                                @click="play(song.id,index)">{{ song.name }}</a>
+                            <a :class="{font_color:index==isactive}" :title="song.name+' -'+song.artists[0].name"
+                                href="javascript:; " @click="play(song.id,index)">{{ song.name }} -
+                                {{song.artists[0].name}} </a>
                         </li>
                     </ul>
                 </div>
@@ -313,6 +318,7 @@
                     return false;
 
                 axios.get("https://autumnfish.cn/search?keywords=" + this.query).then((result) => {
+                    // console.log(result);
                     if ("result" in result.data)
                         that.res = result.data.result.songs;
                     else
