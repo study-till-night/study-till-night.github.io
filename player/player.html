@@ -287,7 +287,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- 音乐播放栏 -->
         <audio :src="mscurl" autoplay controls @play="playing" @pause="pause"></audio>
     </div>
 </body>
@@ -313,7 +313,10 @@
                     return false;
 
                 axios.get("https://autumnfish.cn/search?keywords=" + this.query).then((result) => {
-                    that.res = result.data.result.songs;
+                    if ("result" in result.data)
+                        that.res = result.data.result.songs;
+                    else
+                        that.res = [];
 
                     $(function () {
                         // 延长动画
@@ -374,6 +377,7 @@
     $(function () {
         let deg = 360;
         $(".cover img").css("transition", "all 2s");
+        let timer = "";
         if (!document.hidden) {
             timer = setInterval(() => {
                 if (flag) {
