@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="/images/favicon.ico">
-  <title>mybatis一对一映射 | 敲代码的埼玉</title>
+  <title>Acwing1416牛异或 | 敲代码的埼玉</title>
   <meta name="author" content="敲代码的埼玉" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,22 +13,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="java, javaweb, mybatis" />
+    <meta name="keywords" content="IT, Trie, 前缀和, 算法" />
   
-  <meta name="description" content="mybatis的单表CRUD我们都很熟悉，操作起来也很简单，但涉及多表连接查询这类复杂查询，mybatis有相应的标签用于处理表与表之间的映射关系。这里给出5种方式。 首先来看一下形成一对一关联关系的两个表userinfo和address，一个userinfo只对应一个address。 1234567891011&lt;resultMap id&#x3D;&quot;userinfoResultMap&amp;qu">
+  <meta name="description" content="题目描述农夫约翰在给他的奶牛们喂食时遇到了一个问题。 他共有 N 头奶牛，编号 1∼N。 每次喂食前，这 N 头奶牛会按照 1∼N 的顺序站成一排。 此外，每头奶牛都被分配了一个可能不唯一的整数。 那么所有被分配的整数就形成了一个长度为 N 的整数序列。 请你在该整数序列中找出一个连续的非空子序列，使得子序列中元素的异或和能够最大。 如果存在多个这样的序列，那么选择序列末端整数对应的奶牛编号更小的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mybatis一对一映射">
-<meta property="og:url" content="http://example.com/2021/09/22/mybatis%E4%B8%80%E5%AF%B9%E4%B8%80%E6%98%A0%E5%B0%84/index.html">
+<meta property="og:title" content="Acwing1416牛异或">
+<meta property="og:url" content="http://example.com/2021/09/26/Acwing1416%E7%89%9B%E5%BC%82%E6%88%96/index.html">
 <meta property="og:site_name" content="敲代码的埼玉">
-<meta property="og:description" content="mybatis的单表CRUD我们都很熟悉，操作起来也很简单，但涉及多表连接查询这类复杂查询，mybatis有相应的标签用于处理表与表之间的映射关系。这里给出5种方式。 首先来看一下形成一对一关联关系的两个表userinfo和address，一个userinfo只对应一个address。 1234567891011&lt;resultMap id&#x3D;&quot;userinfoResultMap&amp;qu">
+<meta property="og:description" content="题目描述农夫约翰在给他的奶牛们喂食时遇到了一个问题。 他共有 N 头奶牛，编号 1∼N。 每次喂食前，这 N 头奶牛会按照 1∼N 的顺序站成一排。 此外，每头奶牛都被分配了一个可能不唯一的整数。 那么所有被分配的整数就形成了一个长度为 N 的整数序列。 请你在该整数序列中找出一个连续的非空子序列，使得子序列中元素的异或和能够最大。 如果存在多个这样的序列，那么选择序列末端整数对应的奶牛编号更小的">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/favicon.ico">
-<meta property="article:published_time" content="2021-09-22T14:10:10.000Z">
-<meta property="article:modified_time" content="2021-09-22T14:39:42.769Z">
+<meta property="article:published_time" content="2021-09-26T01:36:15.000Z">
+<meta property="article:modified_time" content="2021-09-26T06:13:20.631Z">
 <meta property="article:author" content="敲代码的埼玉">
-<meta property="article:tag" content="java">
-<meta property="article:tag" content="mybatis">
-<meta property="article:tag" content="javaweb">
+<meta property="article:tag" content="IT">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="前缀和">
+<meta property="article:tag" content="Trie">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/favicon.ico">
 <meta name="twitter:site" content="@null">
@@ -165,17 +166,17 @@
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center">mybatis一对一映射</h1>
+                <h1 class="kratos-entry-title text-center">Acwing1416牛异或</h1>
             
             
             <ul class="kratos-post-meta text-center">
-                <li><i class="fa fa-calendar"></i> 2021-09-22</li>
+                <li><i class="fa fa-calendar"></i> 2021-09-26</li>
                 <li><i class="fa fa-user"></i> 作者 敲代码的埼玉</li>
                 <li>
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~4.38K
+                        ~2.40K
                     
                     字
                 </li>
@@ -184,28 +185,36 @@
         </header>
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                本文最后编辑于 <time datetime="1632321582769"></time> 前，其中的内容可能需要更新。
+                本文最后编辑于 <time datetime="1632636800631"></time> 前，其中的内容可能需要更新。
             </div>
             
             <hr />
-            <p>mybatis的单表CRUD我们都很熟悉，操作起来也很简单，但涉及多表连接查询这类复杂查询，mybatis有相应的标签用于处理表与表之间的映射关系。这里给出5种方式。</p>
-<p>首先来看一下形成一对一关联关系的两个表userinfo和address，一个userinfo只对应一个address。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;userinfoResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.test.domain.Userinfo&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;userid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;userid&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;username&quot;</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;password&quot;</span> <span class="attr">column</span>=<span class="string">&quot;password&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;addressResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.test.domain.Address&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;addrid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;addrid&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;city&quot;</span> <span class="attr">column</span>=<span class="string">&quot;city&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;street&quot;</span> <span class="attr">column</span>=<span class="string">&quot;street&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;zip&quot;</span> <span class="attr">column</span>=<span class="string">&quot;zip&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+            <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>农夫约翰在给他的奶牛们喂食时遇到了一个问题。</p>
+<p>他共有 N 头奶牛，编号 1∼N。</p>
+<p>每次喂食前，这 N 头奶牛会按照 1∼N 的顺序站成一排。</p>
+<p>此外，每头奶牛都被分配了一个可能不唯一的整数。</p>
+<p>那么所有被分配的整数就形成了一个长度为 N 的整数序列。</p>
+<p>请你在该整数序列中找出一个连续的非空子序列，使得子序列中元素的异或和能够最大。</p>
+<p>如果存在多个这样的序列，那么选择序列末端整数对应的奶牛编号更小的那个序列。</p>
+<p>如果仍然存在多个可选的序列，那么选择长度最短的那个序列。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>第一行包含整数 N。</p>
+<p>第 2∼N+1 行，每行包含一个整数，其中第 i 行的整数表示编号为 i−1 的牛被分配的整数值。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出三个整数，分别表示最大的异或和，所选序列首端整数对应的奶牛编号，所选序列末端整数对应的奶牛编号。</p>
+<h2 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h2><p>1≤N≤10^5 ，<br>分配给奶牛的整数的范围是 [0,2^21−1]。</p>
+<h2 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="extends继承关联"><a href="#extends继承关联" class="headerlink" title="-extends继承关联"></a>-extends继承关联</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;userinfoAndAddressResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.test.domain.Userinfo&quot;</span></span></span><br><span class="line"><span class="tag">		<span class="attr">extends</span>=<span class="string">&quot;userinfoResultMap&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;address.addrid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;addrid&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;address.city&quot;</span> <span class="attr">column</span>=<span class="string">&quot;city&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;address.street&quot;</span> <span class="attr">column</span>=<span class="string">&quot;street&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;address.zip&quot;</span> <span class="attr">column</span>=<span class="string">&quot;zip&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span> <span class="number">4</span> <span class="number">5</span></span><br></pre></td></tr></table></figure>
 
-<p>使用extends属性对userinfoResultMap映射表进行扩展，扩展的映射部分的id是关联表的主属性。</p>
-<h2 id="原始方式"><a href="#原始方式" class="headerlink" title="-原始方式"></a>-原始方式</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;userinfoAndAddressResultMap1&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.test.domain.Userinfo&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;userid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;userid&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;username&quot;</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;password&quot;</span> <span class="attr">column</span>=<span class="string">&quot;password&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;address.addrid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;addrid&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;address.city&quot;</span> <span class="attr">column</span>=<span class="string">&quot;city&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;address.street&quot;</span> <span class="attr">column</span>=<span class="string">&quot;street&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;address.zip&quot;</span> <span class="attr">column</span>=<span class="string">&quot;zip&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="思路——前缀和-Trie"><a href="#思路——前缀和-Trie" class="headerlink" title="思路——前缀和+Trie"></a>思路——前缀和+Trie</h2><p>首先分析以下这道题，它是什么意思呢，给定一个长度为N的整数序列，要我们求一段连续的子序列，使得这段连续的子序列的异或和最大。在有多解的情况下，优先取右端点最靠前，左端点最靠后的。</p>
+<p>虽然是异或和，但本质上还是区间求和的问题，那使用前缀和的技巧再适合不过。</p>
+<p>但将前缀和应用到异或和要注意一个性质，即 <strong>a^b^b=a</strong>。这告诉我们异或一个相同的数两次不对结果产生任何影响。我们假设S是前缀和数组，<strong>那么S[i]^S[k]就是下标从k+1到下标为i的区间的异或和</strong>。异或了前长度为k的子序列2次，根据上述的性质，得到的就是剩下的i-k-1长度的子序列的异或和。</p>
+<p>好，解决了前缀和的问题，我们再来研究一下2数异或的值如何更大。我们将一个数拆为2进制数，从高位到低位考察。我们可以推断，<strong>要想得到的异或值更大，要尽量找高位与自己不同的数进行运算。</strong></p>
+<p>为什么呢，因为只有当前位不同，异或的结果才是1，高位是1，即使低位全是0，也比高位是0，低位全是1来的大。所以我们贪心的考虑，从高位开始逐步往下，只选当前位与自己不同的数，若不存在再考虑相同的情况。</p>
+<p>因为每一个数的二进制表示就是一个01字符串，串与串之间存在大量相同的前缀，我们可以使用字典树Trie进行优化。不了解Trie的可以参考这篇文章 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/173981140">算法学习笔记(43): 字典树.</a></p>
+<p>由于本题还有一个多解时的处理要求，我们时刻选取最靠左且最短的解。</p>
+<p>下面来看一下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e5</span>+<span class="number">3</span> , M = N*<span class="number">21</span>;</span><br><span class="line"><span class="keyword">int</span> ans=<span class="number">-1</span>;     <span class="comment">//异或结果初始化为-1，防止特殊数据</span></span><br><span class="line"><span class="keyword">int</span> sum[N];     <span class="comment">//前缀和数组</span></span><br><span class="line"><span class="keyword">int</span> Next[M][<span class="number">2</span>],id[M],cur;  <span class="comment">//trie数组  存储下标数组  trie标号</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> k)</span>    <span class="comment">//k下标插入值x</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> p=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">20</span>;i&gt;=<span class="number">0</span>;i--)      <span class="comment">//数最大21位</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> now = x&gt;&gt;i&amp;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(!Next[p][now]) Next[p][now]=++cur;</span><br><span class="line">        p=Next[p][now];</span><br><span class="line">    &#125;</span><br><span class="line">    id[p]=k;    <span class="comment">//这个标号对应的下标</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> p=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">20</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> now=x&gt;&gt;i&amp;<span class="number">1</span>;     <span class="comment">//当前位</span></span><br><span class="line">        <span class="keyword">if</span>(Next[p][!now]) p=Next[p][!now];  <span class="comment">//当前位有不一样的就走这个分支</span></span><br><span class="line">        <span class="keyword">else</span> p=Next[p][now];        <span class="comment">//不然走位相同的分支</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> id[p];       <span class="comment">//返回下标</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="keyword">int</span> lef,rig;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n+<span class="number">1</span>;i++) cin&gt;&gt;sum[i],sum[i]^=sum[i<span class="number">-1</span>];</span><br><span class="line">    <span class="built_in">insert</span>(sum[<span class="number">0</span>],<span class="number">0</span>);   <span class="comment">//先在0位置插一个0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n+<span class="number">1</span>;i++)      <span class="comment">//边查边插保持最终解为最靠左的解</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="built_in">query</span>(sum[i]);</span><br><span class="line">        <span class="keyword">int</span> tem = sum[i]^sum[k];</span><br><span class="line">        <span class="keyword">if</span>(tem&gt;ans) ans=tem,lef=k+<span class="number">1</span>,rig=i;  </span><br><span class="line">        <span class="built_in">insert</span>(sum[i],i);   <span class="comment">//插入当前元素</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout&lt;&lt;ans&lt;&lt;<span class="string">&#x27; &#x27;</span>&lt;&lt;lef&lt;&lt;<span class="string">&#x27; &#x27;</span>&lt;&lt;rig&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>直接对两个表的所有列都一一进行映射，较为原始的方式，易于理解可读性好但配置繁琐。</p>
-<h2 id="association属性"><a href="#association属性" class="headerlink" title="-association属性"></a>-association属性</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;userinfoAndAddressResultMap2&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.test.domain.Userinfo&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;userid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;userid&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;username&quot;</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;password&quot;</span> <span class="attr">column</span>=<span class="string">&quot;password&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;address&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;addressResultMap&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在映射结果集中使用association标签对关联表进行整体映射，property是重命名后的domain类名，将先前配置好的单表结果集作为附加与另一个表进行关联。</p>
-<h2 id="使用JavaType进行关联"><a href="#使用JavaType进行关联" class="headerlink" title="-使用JavaType进行关联"></a>-使用JavaType进行关联</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;userinfoAndAddressResultMap3&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.test.domain.Userinfo&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;userid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;userid&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;username&quot;</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;password&quot;</span> <span class="attr">column</span>=<span class="string">&quot;password&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;address&quot;</span> <span class="attr">column</span>=<span class="string">&quot;addrid&quot;</span></span></span><br><span class="line"><span class="tag">			<span class="attr">javaType</span>=<span class="string">&quot;com.test.domain.Address&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;addrid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;addrid&quot;</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;city&quot;</span> <span class="attr">column</span>=<span class="string">&quot;city&quot;</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;street&quot;</span> <span class="attr">column</span>=<span class="string">&quot;street&quot;</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;zip&quot;</span> <span class="attr">column</span>=<span class="string">&quot;zip&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>此种方法也使用到association标签，在association标签中使用JavaType属性进行关联而非直接使用单表的结果集，此种方式在已经配置好了单表结果集的情况下不建议使用，代码冗余。</p>
-<h2 id="SELECT结果作关联属性"><a href="#SELECT结果作关联属性" class="headerlink" title="-SELECT结果作关联属性"></a>-SELECT结果作关联属性</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;userinfoAndAddressResultMap4&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.test.domain.Userinfo&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;userid&quot;</span> <span class="attr">column</span>=<span class="string">&quot;userid&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;username&quot;</span> <span class="attr">column</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;password&quot;</span> <span class="attr">column</span>=<span class="string">&quot;password&quot;</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;address&quot;</span> <span class="attr">column</span>=<span class="string">&quot;addrid&quot;</span> <span class="attr">select</span>=<span class="string">&quot;selectAddressById&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectAddressById&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;int&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;addressResultMap&quot;</span>&gt;</span></span><br><span class="line">		SELECT * FROM address WHERE addrid=#&#123;addrid&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>此类方法同样使用association标签，但在标签中采用select属性以查询的结果集作为关联属性，但注意到下面的select标签已经将查询结果转换为address结果集，说明结果集已配置，在结果集已配置的情形下该方法与第三种方式相比略显饶人，不如其简练。</p>
 
         </div>
         
@@ -259,7 +268,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "http://example.com/2021/09/22/mybatis%E4%B8%80%E5%AF%B9%E4%B8%80%E6%98%A0%E5%B0%84/",
+                text: "http://example.com/2021/09/26/Acwing1416%E7%89%9B%E5%BC%82%E6%88%96/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -271,10 +280,13 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/2021/09/22/mybatis%E4%B8%80%E5%AF%B9%E4%B8%80%E6%98%A0%E5%B0%84/";
-            const title         = "「mybatis一对一映射」";
-            const excerpt       = `mybatis的单表CRUD我们都很熟悉，操作起来也很简单，但涉及多表连接查询这类复杂查询，mybatis有相应的标签用于处理表与表之间的映射关系。这里给出5种方式。
-首先来看一下形成一对一关联关系的两个表userinfo和addre...`;
+            const hostUrl       = "http://example.com/2021/09/26/Acwing1416%E7%89%9B%E5%BC%82%E6%88%96/";
+            const title         = "「Acwing1416牛异或」";
+            const excerpt       = `题目描述农夫约翰在给他的奶牛们喂食时遇到了一个问题。
+他共有 N 头奶牛，编号 1∼N。
+每次喂食前，这 N 头奶牛会按照 1∼N 的顺序站成一排。
+此外，每头奶牛都被分配了一个可能不唯一的整数。
+那么所有被分配的整数就形成了一个长度...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -293,10 +305,10 @@
             <div class="footer-tag clearfix">
                 <div class="pull-left">
                 <i class="fa fa-tags"></i>
-                    <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>, <a class="tag-none-link" href="/tags/javaweb/" rel="tag">javaweb</a>, <a class="tag-none-link" href="/tags/mybatis/" rel="tag">mybatis</a>
+                    <a class="tag-none-link" href="/tags/IT/" rel="tag">IT</a>, <a class="tag-none-link" href="/tags/Trie/" rel="tag">Trie</a>, <a class="tag-none-link" href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/" rel="tag">前缀和</a>, <a class="tag-none-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2021-09-22</span>
+                <span>最后编辑：2021-09-26</span>
                 </div>
             </div>
         </footer>
@@ -305,13 +317,9 @@
         <nav class="navigation post-navigation clearfix" role="navigation">
             
             <div class="nav-previous clearfix">
-                <a title=" vue父子组件通信" href="/2021/09/15/vue父子组件通信/">&lt; 上一篇</a>
+                <a title=" mybatis一对一映射" href="/2021/09/22/mybatis一对一映射/">&lt; 上一篇</a>
             </div>
             
-            
-            <div class="nav-next clearfix">
-                <a title=" Acwing1416牛异或" href="/2021/09/26/Acwing1416牛异或/">下一篇 &gt;</a>
-            </div>
             
         </nav>
     
